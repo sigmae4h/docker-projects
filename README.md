@@ -1,2 +1,2 @@
 # docker-dev
-Docker developemnt environment
+Docker-ized developemnt environment with Java 8 and NodeJS
