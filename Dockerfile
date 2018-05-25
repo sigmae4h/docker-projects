@@ -1,5 +1,5 @@
 # Sample run:
-#   docker run --rm -it -p 7777:7777/udp -p 7778:7778/udp -p 27015:27015/udp -p 27021:27021/tcp ark bash
+#   docker run --rm -it -p 7777:7777/udp -p 7778:7778/udp -p 27015:27015/udp -p 27021:27021/tcp -v ArkData:/home/steam/ARK/ShooterGame/Saved/ ark bash
 #   docker run --rm -d -p 7777:7777/udp -p 7778:7778/udp -p 27015:27015/udp -p 27021:27021/tcp ark
 
 FROM ubuntu:16.04
