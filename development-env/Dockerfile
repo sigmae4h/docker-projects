@@ -2,12 +2,14 @@
 #   Eg: docker build -t dev:v1 .
 #
 # Sample run command:
+#   xhost +local:root; \
 #   docker run -ti --rm \
 #       -p 8080:8080 \
 #       -p 8200:8200 \
 #       -p 9876:9876 \
 #       -p 9999:9999 \
 #       -v DataVolume1:/home/developer \
+#       -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
 #       -e DISPLAY=${DISPLAY} \
 #       --name dev \
 #       dev:v1 \
@@ -44,7 +46,7 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     npm install -g @angular/cli
 
 # Install IntelliJ IDEA Ultimate
-RUN wget -q https://download.jetbrains.com/idea/ideaIU-2018.1.4-no-jdk.tar.gz -O intellij.tar.gz && \
+RUN wget https://download.jetbrains.com/idea/ideaIU-2018.1.5-no-jdk.tar.gz -O intellij.tar.gz && \
     mkdir -p /opt/intellij && \
     tar -xf intellij.tar.gz --strip-components=1 -C /opt/intellij && \
     rm -f intellij.tar.gz && \
