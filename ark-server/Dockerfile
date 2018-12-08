@@ -39,10 +39,22 @@ EXPOSE 7777/udp 7778/udp 27015/udp 27021/tcp
 
 USER steam
 WORKDIR /home/steam
+RUN mkdir -p /home/steam/ARK/clusterdata
 
 # Inport server config, install server, and install mods
 COPY main.cfg /etc/arkmanager/instances/
 RUN arkmanager install
 RUN arkmanager installmods
+
+# Inject server specifics with defaults
+ARG MAP="TheIsland"
+ARG SERVER_NAME="Awesome Server"
+ARG SERVER_PASSWORD=""
+ARG ADMIN_PASSWORD="changeMe"
+ARG CLUSTER_NAME="awesome_cluster_7654"
+ARG PORT="7778"
+ARG QUERY_PORT="27015"
+ARG RCON_PORT="32330"
+RUN sed -i "s/<map_name>/${MAP}/g;s/<server_name>/${SERVER_NAME}/g;s/<password>/${SERVER_PASSWORD}/g;s/<admin_password>/${ADMIN_PASSWORD}/;s/<cluster_name>/${CLUSTER_NAME}/g;s/<port>/${PORT}/g;s/<query_port>/${QUERY_PORT}/g;s/<rcon_port>/${RCON_PORT}/g" /etc/arkmanager/instances/main.cfg
 
 CMD ["arkmanager", "run", "@all"]
