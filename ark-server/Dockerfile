@@ -42,8 +42,8 @@ WORKDIR /home/steam
 RUN mkdir -p /home/steam/ARK/clusterdata
 
 # Inport server config, install server, and install mods
-COPY main.cfg /etc/arkmanager/instances/
 RUN arkmanager install
+COPY main.cfg /etc/arkmanager/instances/
 RUN arkmanager installmods
 
 # Inject server specifics with defaults
