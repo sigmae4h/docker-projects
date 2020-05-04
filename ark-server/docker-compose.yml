@@ -1,43 +1,41 @@
 version: '3'
 services:
     island:
-        build:
-            context: .
-            args:
-                MAP: TheIsland
-                SERVER_NAME: "Verdent Island"
-                CLUSTER_NAME: "verdentcluster"
-        ports:
-            - "7777:7777/udp"
-            - "7778:7778/udp"
-            - "27015:27015/udp"
-            - "27021:27021/tcp"
-            - "32330:32330/tcp"
-        volumes:
-            - ArkIslandData:/home/steam/ARK/ShooterGame/Saved/
-            - ArkClusterData:/home/steam/ARK/clusterdata
+      image: ark-base
+      environment:
+        SERVER_NAME: "Verdent Island"
+        SERVER_PASSWORD: ${ark_server_pass}
+        ADMIN_PASSWORD: ${ark_admin_pass}
+        CLUSTER_NAME: "Verdent_cluster"
+        QUERY_PORT: "27001"
+      ports:
+        - "7777:7777/udp"
+        - "7778:7778/udp"
+        - "27001:27001/udp"
+      volumes:
+        - ArkClusterData:/home/steam/clusterdata
+        - ArkIslandServer:/home/steam/saves
 
     extinction:
-        build:
-            context: .
-            args:
-                MAP: Extinction
-                SERVER_NAME: "Verdent Extinction"
-                PORT: "7780"
-                QUERY_PORT: "27017"
-                RCON_PORT: "32332"
-                CLUSTER_NAME: "verdentcluster"
-        ports:
-            - "7780:7780/udp"
-            - "7781:7781/udp"
-            - "27017:27017/udp"
-            - "27023:27023/tcp"
-            - "32332:32332/tcp"
-        volumes:
-            - ArkExtinctionData:/home/steam/ARK/ShooterGame/Saved/
-            - ArkClusterData:/home/steam/ARK/clusterdata
+      image: ark-base
+      environment:
+        MAP: "Extinction"
+        SERVER_NAME: "Verdent Extinction"
+        SERVER_PASSWORD: ${ark_server_pass}
+        ADMIN_PASSWORD: ${ark_admin_pass}
+        PORT: "7780"
+        QUERY_PORT: "27002"
+        RCON_PORT: "32332"
+        CLUSTER_NAME: "Verdent_cluster"
+      ports:
+        - "7780:7780/udp"
+        - "7781:7781/udp"
+        - "27002:27002/udp"
+      volumes:
+        - ArkClusterData:/home/steam/clusterdata
+        - ArkExtinctionServer:/home/steam/saves
 
 volumes:
-    ArkIslandData:
-    ArkExtinctionData:
     ArkClusterData:
+    ArkIslandServer:
+    ArkExtinctionServer:

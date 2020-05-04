@@ -1,26 +1,22 @@
-# Sample run:
-#   docker run --rm -it -p 7777:7777/udp -p 7778:7778/udp -p 27015:27015/udp -p 27021:27021/tcp -v ArkData:/home/steam/ARK/ShooterGame/Saved/ ark bash
-#   docker run --rm -d -p 7777:7777/udp -p 7778:7778/udp -p 27015:27015/udp -p 27021:27021/tcp ark
+# Sample run command:
+# docker run -it --rm --name=ark_island -p 7777:7777/udp -p 7778:7778/udp -p 27015:27015/udp -v ArkIsland:/home/steam/ARK/ShooterGame/Saved/TheIsland ark-base
 
-FROM ubuntu:16.04
+FROM cm2network/steamcmd:root
 
 # Install tools and dependencies
 RUN apt-get update && apt-get install -y \
         tmux \
+        htop \
         perl-modules \
         curl \
         lsof \
         libc6-i386 \
         lib32gcc1 \
         bzip2 \
+        findutils \
+        rsync \
         && \
     rm -rf /var/lib/apt/lists/*
-
-# Create user `steam`
-RUN groupadd -g 999 steam && \
-    useradd -r -u 999 -g steam steam && \
-    mkdir /home/steam && \
-    chown -R steam:steam /home/steam
 
 # Correct max files open issue
 RUN echo 'fs.file-max=100000' >> /etc/sysctl.conf && \
@@ -28,33 +24,32 @@ RUN echo 'fs.file-max=100000' >> /etc/sysctl.conf && \
     echo '*               hard    nofile          1000000' >> /etc/security/limits.conf && \
     echo 'session required pam_limits.so' >> /etc/pam.d/common-session
 
-# Install steamCMD
-RUN mkdir -p /steamcmd && cd $_ && \
-    curl -qL 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxvf -
-
-#Install ark-server-tools
+# Install ark-server-tools
 RUN curl -L http://git.io/vtf5N | bash -s steam
 
-EXPOSE 7777/udp 7778/udp 27015/udp 27021/tcp
-
 USER steam
-WORKDIR /home/steam
-RUN mkdir -p /home/steam/ARK/clusterdata
 
-# Inport server config, install server, and install mods
-RUN arkmanager install
-COPY main.cfg /etc/arkmanager/instances/
-RUN arkmanager installmods
+# Install Ark
+RUN mkdir -p /home/steam/ARK
+RUN /home/steam/steamcmd/steamcmd.sh +login anonymous +force_install_dir /home/steam/ARK +app_update 376030 +quit
 
 # Inject server specifics with defaults
-ARG MAP="TheIsland"
-ARG SERVER_NAME="Awesome Server"
-ARG SERVER_PASSWORD=""
-ARG ADMIN_PASSWORD="changeMe"
-ARG CLUSTER_NAME="awesome_cluster_7654"
-ARG PORT="7778"
-ARG QUERY_PORT="27015"
-ARG RCON_PORT="32330"
-RUN sed -i "s/<map_name>/${MAP}/g;s/<server_name>/${SERVER_NAME}/g;s/<password>/${SERVER_PASSWORD}/g;s/<admin_password>/${ADMIN_PASSWORD}/;s/<cluster_name>/${CLUSTER_NAME}/g;s/<port>/${PORT}/g;s/<query_port>/${QUERY_PORT}/g;s/<rcon_port>/${RCON_PORT}/g" /etc/arkmanager/instances/main.cfg
+ENV MAP="TheIsland"
+ENV SERVER_NAME="Awesome Server"
+ENV SERVER_PASSWORD=""
+ENV ADMIN_PASSWORD="changeMe"
+ENV CLUSTER_NAME="awesome_cluster_7654"
+ENV PORT="7777"
+ENV QUERY_PORT="27015"
+ENV RCON_PORT="32330"
+ENV MODS="797686039,1762210129,761535755,1213453992,693416678,731604991,719928795,793605978"
 
-CMD ["arkmanager", "run", "@all"]
+# Install mods
+RUN arkmanager installmod $MODS
+
+RUN mkdir -p /home/steam/clusterdata
+RUN mkdir -p /home/steam/saves
+COPY run.sh /home/steam
+
+# Run the server
+CMD ["/home/steam/run.sh"]
