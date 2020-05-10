@@ -10,5 +10,4 @@ docker run \
     -e "MAP=Ragnarok" \
     -v ArkClusterData:/home/steam/clusterdata \
     -v ArkSaves:/home/steam/saves \
-    -v "E:\Steam\steamapps\common\ARK\ShooterGame\Saved\Config\WindowsNoEditor":/home/steam/ARK/ShooterGame/Saved/Config/LinuxServer \
     ark-base

@@ -1,9 +1,11 @@
 version: '3'
 services:
-    island:
+    ragnarok:
+      build: .
       image: ark-base
       environment:
-        SERVER_NAME: "Verdent Island"
+        MAP: "Ragnarok"
+        SERVER_NAME: "Verdent Ragnarok"
         SERVER_PASSWORD: ${ark_server_pass}
         ADMIN_PASSWORD: ${ark_admin_pass}
         CLUSTER_NAME: "Verdent_cluster"
@@ -14,7 +16,7 @@ services:
         - "27001:27001/udp"
       volumes:
         - ArkClusterData:/home/steam/clusterdata
-        - ArkIslandServer:/home/steam/saves
+        - ArkRagnarokServer:/home/steam/saves
 
     extinction:
       image: ark-base
@@ -37,5 +39,5 @@ services:
 
 volumes:
     ArkClusterData:
-    ArkIslandServer:
+    ArkRagnarokServer:
     ArkExtinctionServer:
