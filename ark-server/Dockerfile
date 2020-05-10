@@ -49,6 +49,8 @@ RUN arkmanager installmod $MODS
 
 RUN mkdir -p /home/steam/clusterdata
 RUN mkdir -p /home/steam/saves
+RUN mkdir -p /home/steam/ARK/ShooterGame/Saved/Config/LinuxServer
+COPY Game.ini GameUserSettings.ini /home/steam/ARK/ShooterGame/Saved/Config/LinuxServer/
 COPY run.sh /home/steam
 
 # Run the server
