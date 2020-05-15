@@ -14,6 +14,7 @@ services:
         - "7777:7777/udp"
         - "7778:7778/udp"
         - "27001:27001/udp"
+        - "32330:32330/tcp"
       volumes:
         - ArkClusterData:/home/steam/clusterdata
         - ArkRagnarokServer:/home/steam/saves
@@ -29,10 +30,12 @@ services:
         QUERY_PORT: "27002"
         RCON_PORT: "32332"
         CLUSTER_NAME: "Verdent_cluster"
+        RCON_PORT: "32331"
       ports:
         - "7780:7780/udp"
         - "7781:7781/udp"
         - "27002:27002/udp"
+        - "32331:32331/tcp"
       volumes:
         - ArkClusterData:/home/steam/clusterdata
         - ArkExtinctionServer:/home/steam/saves
