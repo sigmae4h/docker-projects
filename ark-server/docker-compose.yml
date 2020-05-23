@@ -19,6 +19,46 @@ services:
         - ArkClusterData:/home/steam/clusterdata
         - ArkRagnarokServer:/home/steam/saves
 
+    island:
+      image: ark-base
+      environment:
+        MAP: "TheIsland"
+        SERVER_NAME: "Verdent Island"
+        SERVER_PASSWORD: ${ark_server_pass}
+        ADMIN_PASSWORD: ${ark_admin_pass}
+        CLUSTER_NAME: "Verdent_cluster"
+        PORT: "7779"
+        QUERY_PORT: "27002"
+        RCON_PORT: "32331"
+      ports:
+        - "7779:7779/udp"
+        - "7780:7780/udp"
+        - "27002:27002/udp"
+        - "32331:32331/tcp"
+      volumes:
+        - ArkClusterData:/home/steam/clusterdata
+        - ArkIslandServer:/home/steam/saves
+
+    aberration:
+      image: ark-base
+      environment:
+        MAP: "Aberation_P"
+        SERVER_NAME: "Verdent Aberration"
+        SERVER_PASSWORD: ${ark_server_pass}
+        ADMIN_PASSWORD: ${ark_admin_pass}
+        CLUSTER_NAME: "Verdent_cluster"
+        PORT: "7781"
+        QUERY_PORT: "27003"
+        RCON_PORT: "32332"
+      ports:
+        - "7781:7781/udp"
+        - "7782:7782/udp"
+        - "27003:27003/udp"
+        - "32332:32332/tcp"
+      volumes:
+        - ArkClusterData:/home/steam/clusterdata
+        - ArkAberrationServer:/home/steam/saves
+
     extinction:
       image: ark-base
       environment:
@@ -26,21 +66,43 @@ services:
         SERVER_NAME: "Verdent Extinction"
         SERVER_PASSWORD: ${ark_server_pass}
         ADMIN_PASSWORD: ${ark_admin_pass}
-        PORT: "7780"
-        QUERY_PORT: "27002"
-        RCON_PORT: "32332"
         CLUSTER_NAME: "Verdent_cluster"
-        RCON_PORT: "32331"
+        PORT: "7783"
+        QUERY_PORT: "27004"
+        RCON_PORT: "32333"
       ports:
-        - "7780:7780/udp"
-        - "7781:7781/udp"
-        - "27002:27002/udp"
-        - "32331:32331/tcp"
+        - "7783:7783/udp"
+        - "7784:7784/udp"
+        - "27004:27004/udp"
+        - "32333:32333/tcp"
       volumes:
         - ArkClusterData:/home/steam/clusterdata
         - ArkExtinctionServer:/home/steam/saves
 
+    genesis:
+      image: ark-base
+      environment:
+        MAP: "Genesis"
+        SERVER_NAME: "Verdent Genesis"
+        SERVER_PASSWORD: ${ark_server_pass}
+        ADMIN_PASSWORD: ${ark_admin_pass}
+        CLUSTER_NAME: "Verdent_cluster"
+        PORT: "7785"
+        QUERY_PORT: "27005"
+        RCON_PORT: "32334"
+      ports:
+        - "7785:7785/udp"
+        - "7786:7786/udp"
+        - "27005:27005/udp"
+        - "32334:32334/tcp"
+      volumes:
+        - ArkClusterData:/home/steam/clusterdata
+        - ArkGenesisServer:/home/steam/saves
+
 volumes:
     ArkClusterData:
     ArkRagnarokServer:
+    ArkIslandServer:
+    ArkAberrationServer:
     ArkExtinctionServer:
+    ArkGenesisServer:
