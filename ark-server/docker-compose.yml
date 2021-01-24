@@ -42,7 +42,7 @@ services:
     aberration:
       image: ark-base
       environment:
-        MAP: "Aberation_P"
+        MAP: "Aberration_P"
         SERVER_NAME: "Verdent Aberration"
         SERVER_PASSWORD: ${ark_server_pass}
         ADMIN_PASSWORD: ${ark_admin_pass}
