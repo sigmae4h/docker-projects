@@ -16,8 +16,8 @@ services:
         - "27001:27001/udp"
         - "32330:32330/tcp"
       volumes:
-        - ArkClusterData:/home/steam/clusterdata
-        - ArkRagnarokServer:/home/steam/saves
+        - ClusterData:/home/steam/clusterdata
+        - Ragnarok:/home/steam/saves
 
     island:
       image: ark-base
@@ -36,8 +36,8 @@ services:
         - "27002:27002/udp"
         - "32331:32331/tcp"
       volumes:
-        - ArkClusterData:/home/steam/clusterdata
-        - ArkIslandServer:/home/steam/saves
+        - ClusterData:/home/steam/clusterdata
+        - Island:/home/steam/saves
 
     aberration:
       image: ark-base
@@ -56,8 +56,8 @@ services:
         - "27003:27003/udp"
         - "32332:32332/tcp"
       volumes:
-        - ArkClusterData:/home/steam/clusterdata
-        - ArkAberrationServer:/home/steam/saves
+        - ClusterData:/home/steam/clusterdata
+        - Aberration:/home/steam/saves
 
     extinction:
       image: ark-base
@@ -76,8 +76,8 @@ services:
         - "27004:27004/udp"
         - "32333:32333/tcp"
       volumes:
-        - ArkClusterData:/home/steam/clusterdata
-        - ArkExtinctionServer:/home/steam/saves
+        - ClusterData:/home/steam/clusterdata
+        - Extinction:/home/steam/saves
 
     genesis:
       image: ark-base
@@ -96,13 +96,13 @@ services:
         - "27005:27005/udp"
         - "32334:32334/tcp"
       volumes:
-        - ArkClusterData:/home/steam/clusterdata
-        - ArkGenesisServer:/home/steam/saves
+        - ClusterData:/home/steam/clusterdata
+        - Genesis:/home/steam/saves
 
 volumes:
-    ArkClusterData:
-    ArkRagnarokServer:
-    ArkIslandServer:
-    ArkAberrationServer:
-    ArkExtinctionServer:
-    ArkGenesisServer:
+    ClusterData:
+    Ragnarok:
+    Island:
+    Aberration:
+    Extinction:
+    Genesis:
